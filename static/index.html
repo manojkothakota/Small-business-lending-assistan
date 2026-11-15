@@ -1,0 +1,84 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Harbor Street Capital | Small business loans</title>
+<style>
+:root{--bg:#f2f5f3;--ink:#12261f;--forest:#1f5c4a;--brass:#b8860b;--line:#d5ddd8;--card:#fff;--bad:#a63a2b}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1a16;--ink:#e6efe9;--forest:#6fc3a5;--brass:#e0b04a;--line:#2a3d36;--card:#15251f;--bad:#f08a78}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+h1,h2{font-family:Georgia,serif;line-height:1.15;margin:0 0 .6rem}h1{font-size:clamp(2rem,5vw,3.2rem)}h2{font-size:1.6rem}
+header,main,footer{max-width:1040px;margin:0 auto;padding:0 1.2rem}
+header{display:flex;justify-content:space-between;align-items:center;padding-top:1.2rem;padding-bottom:1.2rem}
+.logo{font-family:Georgia,serif;font-weight:700;font-size:1.2rem;color:var(--forest)}nav a{margin-left:1.2rem;color:var(--ink);text-decoration:none}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;padding:2rem 0 3rem;align-items:start}
+@media(max-width:800px){.hero{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.3rem}
+label{display:block;font-size:.9rem;margin:.6rem 0 .2rem}input{width:100%;padding:.55rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+button{background:var(--forest);color:var(--bg);border:0;border-radius:6px;padding:.7rem 1.2rem;font:inherit;font-weight:600;cursor:pointer;margin-top:1rem}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.v{font-family:Georgia,serif;font-size:1.3rem;margin:.2rem 0}.ok{color:var(--forest)}.no{color:var(--bad)}
+.chk{border-top:1px solid var(--line);padding:.6rem 0;font-size:.92rem}.chk small{display:block;color:var(--ink);opacity:.7}
+section{padding:2rem 0;border-top:1px solid var(--line)}.two{display:grid;grid-template-columns:1fr 1fr;gap:2rem}@media(max-width:800px){.two{grid-template-columns:1fr}}
+.ans{background:var(--card);border-left:4px solid var(--forest);padding:.9rem;border-radius:6px;margin-top:1rem}
+.cite{font-size:.85rem;opacity:.8;border-left:3px solid var(--line);padding-left:.6rem;margin:.5rem 0}
+svg{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px}footer{padding:2rem 1.2rem;font-size:.85rem;opacity:.75}
+</style></head><body>
+<header><span class="logo">Harbor Street Capital</span><nav><a href="#ask">Ask a question</a><a href="#how">How answers are found</a><a href="#growth">Growth insights</a><a href="#pipeline">How it works</a></nav></header>
+<main>
+<div class="hero"><div>
+<h1>Find out what your business could borrow in under a minute</h1>
+<p>Enter a few numbers and see an estimated payment, which lending rules you meet, and what to change if you fall short. No credit check, no account.</p>
+<p><small>Demo with a fictional lender and synthetic policy. Estimates only, not a credit decision.</small></p></div>
+<form class="card" id="f"><h2>Quick check</h2>
+<div class="row"><div><label for="months">Months in business</label><input id="months" type="number" value="24"></div>
+<div><label for="rev">Annual revenue ($)</label><input id="rev" type="number" value="240000"></div></div>
+<div class="row"><div><label for="cf">Monthly cash flow ($)</label><input id="cf" type="number" value="7000"></div>
+<div><label for="debt">Existing monthly debt ($)</label><input id="debt" type="number" value="800"></div></div>
+<div class="row"><div><label for="score">Owner credit score</label><input id="score" type="number" value="660"></div>
+<div><label for="amt">Amount wanted ($)</label><input id="amt" type="number" value="60000"></div></div>
+<label for="term">Term (months)</label><input id="term" type="number" value="24">
+<button>Check my eligibility</button><div id="res" aria-live="polite"></div></form></div>
+<section id="ask"><div class="two"><div><h2>Ask about our lending policy</h2>
+<p>Answers come only from the policy documents, with the source shown. If it isn't covered, the assistant says so.</p>
+<form id="cf2"><label for="q">Your question</label><input id="q" placeholder="Which documents are required?"><button>Ask</button></form><div id="out" aria-live="polite"></div></div>
+<div id="how"><h2>How the answer was found</h2>
+<p>Each policy paragraph is turned into a vector and placed on this map. Your question gets a vector too, and the closest paragraphs are retrieved.</p><svg id="map" viewBox="0 0 420 280" role="img" aria-label="Map of policy paragraphs and your question"></svg></div></div></section>
+<section id="growth"><h2>Growth insights for the lending team</h2>
+<p id="stats"></p><div class="two"><div><h3>Applicants by industry</h3><div id="bars"></div><h3>Why applicants fall short</h3><div id="why"></div></div>
+<div><h3>Ideas to grow lending</h3><div id="ideas"></div></div></div></section>
+<section id="pipeline"><h2>How the assistant works</h2>
+<p>Everything it says comes from documents we wrote ourselves. This is the path a question takes, with live numbers.</p><ol id="stages"></ol>
+<p><b>Where AI helps:</b> understanding the wording of a question, drafting a plain-language answer from the retrieved policy, preparing banker summaries, and suggesting growth ideas from application trends. Rules and policy text decide eligibility. AI never approves a loan.</p></section>
+</main><footer>Independent portfolio project. Fictional company, synthetic data, no affiliation with any bank.</footer>
+<script>
+const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const V={likely_eligible:['Likely eligible','ok'],needs_review:['Close, needs review','no'],not_yet:['Not eligible yet','no']};
+$('#f').onsubmit=async e=>{e.preventDefault();const n=id=>+$(id).value;
+const r=await fetch('/api/eligibility',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({months_in_business:n('#months'),annual_revenue:n('#rev'),monthly_cash_flow:n('#cf'),existing_monthly_debt:n('#debt'),credit_score:n('#score'),amount:n('#amt'),term_months:n('#term')})});
+const d=await r.json();if(!r.ok){$('#res').textContent='Please check your numbers and try again.';return}
+$('#res').innerHTML=`<p class="v ${V[d.verdict][1]}">${V[d.verdict][0]}</p><p>Estimated payment $${d.monthly_payment.toLocaleString()}/month at ${(d.apr*100).toFixed(0)}% APR. Coverage ratio ${d.dscr}.</p>`+
+d.checks.map(c=>`<div class="chk"><b class="${c.passed?'ok':'no'}">${c.passed?'Met':'Not met'}</b> ${esc(c.name)}: ${esc(c.detail)}<small>Policy: ${esc(c.policy||'')}</small></div>`).join('')+
+(d.tips.length?'<p><b>What could help</b></p>'+d.tips.map(t=>`<p>${esc(t)}</p>`).join(''):'')+offersHtml(d)};
+$('#cf2').onsubmit=async e=>{e.preventDefault();const q=$('#q').value;
+const r=await fetch('/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});const d=await r.json();
+$('#out').innerHTML=r.ok?`<div class="ans">${esc(d.answer)}</div>`+d.citations.map(c=>`<div class="cite"><b>[${c.n}] ${esc(c.heading)}</b> (match ${c.score})<br>${esc(c.text)}</div>`).join(''):'Please enter a longer question.';
+draw(q,d.citations?d.citations.map(c=>c.heading):[])};
+function offersHtml(d){if(!d.offers.length)return'';
+return '<p><b>Offers matched to you</b></p>'+d.offers.map(o=>`<div class="chk"><b class="ok">${o.apr_cut?'-'+o.apr_cut.toFixed(2)+' pts APR':'New product'}</b> ${esc(o.name)}<small>${esc(o.text||'')}</small></div>`).join('')+
+(d.verdict!=='not_yet'?`<p>With these offers: <b>$${d.payment_after_offers.toLocaleString()}/month</b> at ${(d.apr_after_offers*100).toFixed(2)}% APR.</p>`:'')+
+'<p><b>How to apply</b></p><ol>'+d.process_steps.map(s=>`<li>${esc(s.replace(/^Step \d+:\s*/,''))}</li>`).join('')+'</ol>'}
+async function loadPipe(){const d=await (await fetch('/api/pipeline')).json();$('#stages').innerHTML=d.stages.map(s=>`<li><b>${esc(s.name)}:</b> ${esc(s.detail)}</li>`).join('')}
+async function draw(q,top=[]){const d=await (await fetch('/api/vector?q='+encodeURIComponent(q||''))).json(),P=d.map.points,Q=d.map.query;
+const all=Q?[...P,Q]:P,xs=all.map(p=>p.x),ys=all.map(p=>p.y),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+const X=v=>30+(v-x0)/((x1-x0)||1)*360,Y=v=>30+(v-y0)/((y1-y0)||1)*220;let s='';
+if(Q)P.filter(p=>top.includes(p.heading)).forEach(p=>s+=`<line x1="${X(Q.x)}" y1="${Y(Q.y)}" x2="${X(p.x)}" y2="${Y(p.y)}" stroke="var(--brass)" stroke-dasharray="4"/>`);
+P.forEach(p=>{const t=top.includes(p.heading);s+=`<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="6" fill="${t?'var(--forest)':'var(--line)'}"/><text x="${X(p.x)+9}" y="${Y(p.y)+4}" font-size="10" fill="var(--ink)">${esc(p.heading)}</text>`});
+if(Q)s+=`<circle cx="${X(Q.x)}" cy="${Y(Q.y)}" r="8" fill="none" stroke="var(--brass)" stroke-width="3"/><text x="${X(Q.x)+11}" y="${Y(Q.y)+4}" font-size="11" font-weight="700" fill="var(--brass)">your question</text>`;
+$('#map').innerHTML=s;loadPipe()}
+draw('');
+(async()=>{const d=await (await fetch('/api/insights')).json();
+$('#stats').innerHTML=`Based on ${d.total} synthetic applications: <b>${d.eligible}</b> likely eligible and <b>${d.near_miss}</b> within one rule of qualifying (about $${d.near_miss_value.toLocaleString()} in requested loans).`;
+const bar=(l,v,max,t)=>`<div style="margin:.4rem 0"><small>${esc(l)}: ${t}</small><div style="background:var(--line);border-radius:4px"><div style="width:${Math.round(100*v/max)}%;background:var(--forest);height:10px;border-radius:4px"></div></div></div>`;
+$('#bars').innerHTML=d.by_industry.map(i=>bar(i.industry,i.eligible_pct,100,i.eligible_pct+'% likely eligible of '+i.applications)).join('');
+const mx=Math.max(...d.decline_reasons.map(r=>r.count));$('#why').innerHTML=d.decline_reasons.map(r=>bar(r.reason,r.count,mx,r.count+' applicants')).join('');
+$('#ideas').innerHTML=d.ideas.map(i=>`<div class="card" style="margin-bottom:.8rem"><b>${esc(i.title)}</b><p>${esc(i.why)}</p><p><i>${esc(i.pitch)}</i></p></div>`).join('')})();
+</script></body></html>

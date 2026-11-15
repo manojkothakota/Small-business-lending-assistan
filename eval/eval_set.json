@@ -1,0 +1,54 @@
+[
+ {
+  "q": "How long must a business have operated?",
+  "heading": "Eligibility"
+ },
+ {
+  "q": "What credit score do I need?",
+  "heading": "Eligibility"
+ },
+ {
+  "q": "What is the debt service coverage ratio requirement?",
+  "heading": "Cash flow requirement"
+ },
+ {
+  "q": "Which documents are required?",
+  "heading": "Required documents"
+ },
+ {
+  "q": "What APR should I expect?",
+  "heading": "Pricing"
+ },
+ {
+  "q": "How soon do funds reach my account?",
+  "heading": "Decisions and funding"
+ },
+ {
+  "q": "Why was my application declined and when can I reapply?",
+  "heading": "Declines"
+ },
+ {
+  "q": "Does the AI decide my loan?",
+  "heading": "Human review"
+ },
+ {
+  "q": "Max equipment financing amount?",
+  "heading": "Loan products"
+ },
+ {
+  "q": "What is the weather in Paris?",
+  "heading": null
+ },
+ {
+  "q": "Who won the cricket world cup?",
+  "heading": null
+ },
+ {
+  "q": "Is there an autopay discount?",
+  "heading": "Autopay discount"
+ },
+ {
+  "q": "What are the steps to apply?",
+  "heading": "How to apply"
+ }
+]
